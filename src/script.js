@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import gsap from "gsap";
 
 console.log(THREE);
 
@@ -95,6 +96,9 @@ renderer.render(scene, camera);
 
 // let time = Date.now();
 const clock = new THREE.Clock();
+
+// Update objects By gsap
+// gsap.to(mesh.position, { duration: 100, delay: 1, x: 200 });
 
 const tick = () => {
   // Update objects By Frame
