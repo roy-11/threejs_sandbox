@@ -88,3 +88,40 @@ const renderer = new THREE.WebGLRenderer({
 });
 renderer.setSize(sizes.width, sizes.height);
 renderer.render(scene, camera);
+
+/**
+ * Animate
+ */
+
+// let time = Date.now();
+const clock = new THREE.Clock();
+
+const tick = () => {
+  // Update objects By Frame
+  // mesh.rotation.y += 0.01;
+
+  // Update objects By Time
+  // const currentTime = Date.now();
+  // const deltaTime = currentTime - time;
+  // time = currentTime;
+  // mesh.rotation.y += 0.001 * deltaTime;
+
+  // Update objects By Clock
+  const elapsedTime = clock.getElapsedTime();
+  mesh.rotation.y = elapsedTime;
+  mesh.position.x = Math.cos(elapsedTime);
+  mesh.position.y = Math.sin(elapsedTime);
+
+  // Update camera By Clock
+  camera.position.x = Math.cos(elapsedTime);
+  camera.position.y = Math.sin(elapsedTime);
+  camera.lookAt(mesh.position);
+
+  // Render
+  renderer.render(scene, camera);
+
+  // Call tick again on the next frame
+  window.requestAnimationFrame(tick);
+};
+
+tick();
