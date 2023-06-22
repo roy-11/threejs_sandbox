@@ -49,23 +49,6 @@ window.addEventListener("dblclick", () => {
   }
 });
 
-// Cursor
-const cursor = {
-  x: 0,
-  y: 0,
-};
-
-window.addEventListener("mousemove", (event) => {
-  console.log(cursor.x, cursor.y);
-
-  if (event.clientX >= 0 && event.clientX <= sizes.width) {
-    cursor.x = event.clientX / sizes.width - 0.5; // -0.5 ~ 0.5
-  }
-  if (event.clientY >= 0 && event.clientY <= sizes.height) {
-    cursor.y = -(event.clientY / sizes.height - 0.5); // -0.5 ~ 0.5
-  }
-});
-
 // PerspectiveCamera
 const camera = new THREE.PerspectiveCamera(
   75,
@@ -110,6 +93,23 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height);
 renderer.render(scene, camera);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+// Cursor
+// const cursor = {
+//   x: 0,
+//   y: 0,
+// };
+//
+// window.addEventListener("mousemove", (event) => {
+//   console.log(cursor.x, cursor.y);
+//
+//   if (event.clientX >= 0 && event.clientX <= sizes.width) {
+//     cursor.x = event.clientX / sizes.width - 0.5; // -0.5 ~ 0.5
+//   }
+//   if (event.clientY >= 0 && event.clientY <= sizes.height) {
+//     cursor.y = -(event.clientY / sizes.height - 0.5); // -0.5 ~ 0.5
+//   }
+// });
 
 // Animation
 const tick = () => {
