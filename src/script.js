@@ -1,11 +1,19 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import gsap from "gsap";
+import * as dat from "lil-gui";
+
+// Debug
+const gui = new dat.GUI();
 
 // Scene
 const scene = new THREE.Scene();
 
 // Object
 const geometry = new THREE.BoxGeometry(1, 1, 1, 2, 2, 2);
+const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+const mesh = new THREE.Mesh(geometry, material);
+scene.add(mesh);
 
 // const positionsArray = new Float32Array(9);
 // positionsArray[0] = 0;
@@ -22,23 +30,41 @@ const geometry = new THREE.BoxGeometry(1, 1, 1, 2, 2, 2);
 // const positionsAttribute = new THREE.BufferAttribute(positionsArray, 3);
 // const geometry = new THREE.BufferGeometry();
 // geometry.setAttribute("position", positionsAttribute);
+//
+// const count = 50;
+// const positionsArray = new Float32Array(count * 3 * 3);
+//
+// for (let i = 0; i < count * 3 * 3; i++) {
+//   positionsArray[i] = Math.random() - 0.5;
+// }
+// const positionsAttribute = new THREE.BufferAttribute(positionsArray, 3);
+// geometry.setAttribute("position", positionsAttribute);
+//
+// const material = new THREE.MeshBasicMaterial({
+//   color: 0xff0000,
+//   wireframe: true,
+// });
+//
+// const mesh = new THREE.Mesh(geometry, material);
+// scene.add(mesh);
 
-const count = 50;
-const positionsArray = new Float32Array(count * 3 * 3);
+const parameters = {
+  spin: () => {
+    gsap.to(mesh.rotation, { duration: 1, y: mesh.rotation.y + 10 });
+  },
+};
 
-for (let i = 0; i < count * 3 * 3; i++) {
-  positionsArray[i] = Math.random() - 0.5;
-}
-const positionsAttribute = new THREE.BufferAttribute(positionsArray, 3);
-geometry.setAttribute("position", positionsAttribute);
-
-const material = new THREE.MeshBasicMaterial({
-  color: 0xff0000,
-  wireframe: true,
-});
-
-const mesh = new THREE.Mesh(geometry, material);
-scene.add(mesh);
+// Debug
+// gui.add(mesh.position, "x", -3, 3, 0.01);
+// gui.add(mesh.position, "y", -3, 3, 0.01);
+// gui.add(mesh.position, "z", -3, 3, 0.01);
+gui.add(mesh.position, "x").min(-3).max(3).step(0.01).name("X");
+gui.add(mesh.position, "y").min(-3).max(3).step(0.01).name("Y");
+gui.add(mesh.position, "z").min(-3).max(3).step(0.01).name("Z");
+gui.add(mesh, "visible");
+gui.add(material, "wireframe");
+gui.addColor(material, "color");
+gui.add(parameters, "spin");
 
 // Size
 const sizes = {
