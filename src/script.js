@@ -3,6 +3,65 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import gsap from "gsap";
 import * as dat from "lil-gui";
 
+// import imagaeSource from "../static/textures/door/normal.jpg";
+// console.log(imagaeSource);
+
+// Textures
+// const image = new Image();
+// const texture = new THREE.Texture(image);
+// texture.needsUpdate = true;
+// image.onload = () => {
+//   texture.needsUpdate = false;
+//   console.log(texture);
+// };
+//
+// image.src = "/textures/door/color.jpg";
+
+const loadingManager = new THREE.LoadingManager();
+loadingManager.onStart = () => {
+  console.log("loading started");
+};
+loadingManager.onLoad = () => {
+  console.log("loading finished");
+};
+loadingManager.onProgress = () => {
+  console.log("loading progressing");
+};
+loadingManager.onError = () => {
+  console.log("loading error");
+};
+
+const textureLoader = new THREE.TextureLoader(loadingManager);
+const color = textureLoader.load("/textures/door/color.jpg");
+const alpha = textureLoader.load("/textures/door/alpha.jpg");
+const height = textureLoader.load("/textures/door/height.jpg");
+const normal = textureLoader.load("/textures/door/normal.jpg");
+const ambientOcclusion = textureLoader.load(
+  "/textures/door/ambientOcclusion.jpg"
+);
+const metalness = textureLoader.load("/textures/door/metalness.jpg");
+const roughness = textureLoader.load("/textures/door/roughness.jpg");
+const checker1 = textureLoader.load("/textures/checkerboard-1024x1024.png");
+const checker2 = textureLoader.load("/textures/checkerboard-8x8.png");
+const minecraft = textureLoader.load("/textures/minecraft.png");
+const selected = minecraft;
+
+// selected.repeat.x = 2;
+// selected.repeat.y = 3;
+// selected.wrapS = THREE.RepeatWrapping;
+// selected.wrapT = THREE.RepeatWrapping;
+// selected.wrapS = THREE.MirroredRepeatWrapping;
+// selected.wrapT = THREE.MirroredRepeatWrapping;
+
+// selected.offset.x = 0.5;
+// selected.offset.y = 0.5;
+// selected.rotation = Math.PI * 0.25;
+// selected.center.x = 0.5;
+// selected.center.y = 0.5;
+
+selected.minFilter = THREE.NearestFilter;
+selected.magFilter = THREE.NearestFilter;
+
 // Debug
 const gui = new dat.GUI();
 
@@ -11,7 +70,9 @@ const scene = new THREE.Scene();
 
 // Object
 const geometry = new THREE.BoxGeometry(1, 1, 1, 2, 2, 2);
-const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+// const geometry = new THREE.SphereGeometry(1, 32, 32);
+// console.log(geometry.attributes.uv);
+const material = new THREE.MeshBasicMaterial({ map: selected });
 const mesh = new THREE.Mesh(geometry, material);
 scene.add(mesh);
 
