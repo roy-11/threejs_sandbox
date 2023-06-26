@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import gsap from "gsap";
-import * as dat from "lil-gui";
+// import gsap from "gsap";
+// import * as dat from "lil-gui";
 
 // import imagaeSource from "../static/textures/door/normal.jpg";
 // console.log(imagaeSource);
@@ -17,53 +17,53 @@ import * as dat from "lil-gui";
 //
 // image.src = "/textures/door/color.jpg";
 
-const loadingManager = new THREE.LoadingManager();
-loadingManager.onStart = () => {
-  console.log("loading started");
-};
-loadingManager.onLoad = () => {
-  console.log("loading finished");
-};
-loadingManager.onProgress = () => {
-  console.log("loading progressing");
-};
-loadingManager.onError = () => {
-  console.log("loading error");
-};
-
-const textureLoader = new THREE.TextureLoader(loadingManager);
-const color = textureLoader.load("/textures/door/color.jpg");
-const alpha = textureLoader.load("/textures/door/alpha.jpg");
-const height = textureLoader.load("/textures/door/height.jpg");
-const normal = textureLoader.load("/textures/door/normal.jpg");
-const ambientOcclusion = textureLoader.load(
-  "/textures/door/ambientOcclusion.jpg"
-);
-const metalness = textureLoader.load("/textures/door/metalness.jpg");
-const roughness = textureLoader.load("/textures/door/roughness.jpg");
-const checker1 = textureLoader.load("/textures/checkerboard-1024x1024.png");
-const checker2 = textureLoader.load("/textures/checkerboard-8x8.png");
-const minecraft = textureLoader.load("/textures/minecraft.png");
-
-const matcap = textureLoader.load("/textures/matcaps/1.png");
-const matcap8 = textureLoader.load("/textures/matcaps/8.png");
-const gradient = textureLoader.load("/textures/gradients/3.jpg");
-const gradient5 = textureLoader.load("/textures/gradients/5.jpg");
-gradient.minFilter = THREE.NearestFilter;
-gradient.magFilter = THREE.NearestFilter;
-gradient.generateMipmaps = false;
-
-const cubeTextureLoader = new THREE.CubeTextureLoader()
-const envMapTexture = cubeTextureLoader.load([
-  "/textures/environmentMaps/0/px.jpg",
-  "/textures/environmentMaps/0/nx.jpg",
-  "/textures/environmentMaps/0/py.jpg",
-  "/textures/environmentMaps/0/ny.jpg",
-  "/textures/environmentMaps/0/pz.jpg",
-  "/textures/environmentMaps/0/nz.jpg",
-]);
-
-const selected = minecraft;
+// const loadingManager = new THREE.LoadingManager();
+// loadingManager.onStart = () => {
+//   console.log("loading started");
+// };
+// loadingManager.onLoad = () => {
+//   console.log("loading finished");
+// };
+// loadingManager.onProgress = () => {
+//   console.log("loading progressing");
+// };
+// loadingManager.onError = () => {
+//   console.log("loading error");
+// };
+//
+// const textureLoader = new THREE.TextureLoader(loadingManager);
+// const color = textureLoader.load("/textures/door/color.jpg");
+// const alpha = textureLoader.load("/textures/door/alpha.jpg");
+// const height = textureLoader.load("/textures/door/height.jpg");
+// const normal = textureLoader.load("/textures/door/normal.jpg");
+// const ambientOcclusion = textureLoader.load(
+//   "/textures/door/ambientOcclusion.jpg"
+// );
+// const metalness = textureLoader.load("/textures/door/metalness.jpg");
+// const roughness = textureLoader.load("/textures/door/roughness.jpg");
+// const checker1 = textureLoader.load("/textures/checkerboard-1024x1024.png");
+// const checker2 = textureLoader.load("/textures/checkerboard-8x8.png");
+// const minecraft = textureLoader.load("/textures/minecraft.png");
+//
+// const matcap = textureLoader.load("/textures/matcaps/1.png");
+// const matcap8 = textureLoader.load("/textures/matcaps/8.png");
+// const gradient = textureLoader.load("/textures/gradients/3.jpg");
+// const gradient5 = textureLoader.load("/textures/gradients/5.jpg");
+// gradient.minFilter = THREE.NearestFilter;
+// gradient.magFilter = THREE.NearestFilter;
+// gradient.generateMipmaps = false;
+//
+// const cubeTextureLoader = new THREE.CubeTextureLoader()
+// const envMapTexture = cubeTextureLoader.load([
+//   "/textures/environmentMaps/0/px.jpg",
+//   "/textures/environmentMaps/0/nx.jpg",
+//   "/textures/environmentMaps/0/py.jpg",
+//   "/textures/environmentMaps/0/ny.jpg",
+//   "/textures/environmentMaps/0/pz.jpg",
+//   "/textures/environmentMaps/0/nz.jpg",
+// ]);
+//
+// const selected = minecraft;
 
 // selected.repeat.x = 2;
 // selected.repeat.y = 3;
@@ -78,21 +78,21 @@ const selected = minecraft;
 // selected.center.x = 0.5;
 // selected.center.y = 0.5;
 
-selected.minFilter = THREE.NearestFilter;
-selected.magFilter = THREE.NearestFilter;
+// selected.minFilter = THREE.NearestFilter;
+// selected.magFilter = THREE.NearestFilter;
 
 // Debug
-const gui = new dat.GUI();
+// const gui = new dat.GUI();
 
 // Scene
 const scene = new THREE.Scene();
 
 // Object
-const geometry = new THREE.BoxGeometry(1, 1, 1, 2, 2, 2);
+// const geometry = new THREE.BoxGeometry(1, 1, 1, 2, 2, 2);
 // const geometry = new THREE.SphereGeometry(1, 32, 32);
 // console.log(geometry.attributes.uv);
-const material = new THREE.MeshBasicMaterial({ map: selected });
-const mesh = new THREE.Mesh(geometry, material);
+// const material = new THREE.MeshBasicMaterial({ map: selected });
+// const mesh = new THREE.Mesh(geometry, material);
 // scene.add(mesh);
 
 // Object 2
@@ -122,50 +122,50 @@ const mesh = new THREE.Mesh(geometry, material);
 // const material2 = new THREE.MeshToonMaterial();
 // material2.gradientMap = gradient;
 
-const material2 = new THREE.MeshStandardMaterial();
-material2.metalness = 0;
-material2.roughness = 0;
-material2.map = color;
-material2.aoMap = ambientOcclusion;
-material2.aoMapIntensity = 10;
-material2.displacementMap = height;
-material2.displacementScale = 0.05;
-material2.metalnessMap = metalness;
-material2.roughnessMap = roughness;
-material2.normalMap = normal;
-material2.normalScale.set(1.5, 1.5);
-material2.transparent = true;
-material2.alphaMap = alpha;
+// const material2 = new THREE.MeshStandardMaterial();
+// material2.metalness = 0;
+// material2.roughness = 0;
+// material2.map = color;
+// material2.aoMap = ambientOcclusion;
+// material2.aoMapIntensity = 10;
+// material2.displacementMap = height;
+// material2.displacementScale = 0.05;
+// material2.metalnessMap = metalness;
+// material2.roughnessMap = roughness;
+// material2.normalMap = normal;
+// material2.normalScale.set(1.5, 1.5);
+// material2.transparent = true;
+// material2.alphaMap = alpha;
 
 // material2.metalness = 1;
 // material2.envMap = envMapTexture;
 
-gui.add(material2, "metalness").min(0).max(1).step(0.0001);
-gui.add(material2, "roughness").min(0).max(1).step(0.0001);
-gui.add(material2, "aoMapIntensity").min(0).max(10).step(0.0001);
-gui.add(material2, "displacementScale").min(0).max(1).step(0.0001);
+// gui.add(material2, "metalness").min(0).max(1).step(0.0001);
+// gui.add(material2, "roughness").min(0).max(1).step(0.0001);
+// gui.add(material2, "aoMapIntensity").min(0).max(10).step(0.0001);
+// gui.add(material2, "displacementScale").min(0).max(1).step(0.0001);
 
-const sphereGeometry = new THREE.SphereGeometry(0.5, 16, 16);
-const sphere = new THREE.Mesh(sphereGeometry, material2);
-sphere.position.x = -1.5;
-
-const planeGeometry = new THREE.PlaneGeometry(1, 1, 100, 100);
-const plane = new THREE.Mesh(planeGeometry, material2);
-
-const torusGeometry = new THREE.TorusGeometry(0.3, 0.2, 16, 32);
-const torus = new THREE.Mesh(torusGeometry, material2);
-torus.position.x = 1.5;
-scene.add(sphere, plane, torus);
+// const sphereGeometry = new THREE.SphereGeometry(0.5, 16, 16);
+// const sphere = new THREE.Mesh(sphereGeometry, material2);
+// sphere.position.x = -1.5;
+//
+// const planeGeometry = new THREE.PlaneGeometry(1, 1, 100, 100);
+// const plane = new THREE.Mesh(planeGeometry, material2);
+//
+// const torusGeometry = new THREE.TorusGeometry(0.3, 0.2, 16, 32);
+// const torus = new THREE.Mesh(torusGeometry, material2);
+// torus.position.x = 1.5;
+// scene.add(sphere, plane, torus);
 
 // Lights
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-scene.add(ambientLight);
+// const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+// scene.add(ambientLight);
 
-const pointLight = new THREE.PointLight(0xffffff, 0.5);
-pointLight.position.x = 2;
-pointLight.position.y = 3;
-pointLight.position.z = 4;
-scene.add(pointLight);
+// const pointLight = new THREE.PointLight(0xffffff, 0.5);
+// pointLight.position.x = 2;
+// pointLight.position.y = 3;
+// pointLight.position.z = 4;
+// scene.add(pointLight);
 
 // const positionsArray = new Float32Array(9);
 // positionsArray[0] = 0;
@@ -200,23 +200,23 @@ scene.add(pointLight);
 // const mesh = new THREE.Mesh(geometry, material);
 // scene.add(mesh);
 
-const parameters = {
-  spin: () => {
-    gsap.to(mesh.rotation, { duration: 1, y: mesh.rotation.y + 10 });
-  },
-};
+// const parameters = {
+//   spin: () => {
+//     gsap.to(mesh.rotation, { duration: 1, y: mesh.rotation.y + 10 });
+//   },
+// };
 
 // Debug
 // gui.add(mesh.position, "x", -3, 3, 0.01);
 // gui.add(mesh.position, "y", -3, 3, 0.01);
 // gui.add(mesh.position, "z", -3, 3, 0.01);
-gui.add(mesh.position, "x").min(-3).max(3).step(0.01).name("X");
-gui.add(mesh.position, "y").min(-3).max(3).step(0.01).name("Y");
-gui.add(mesh.position, "z").min(-3).max(3).step(0.01).name("Z");
-gui.add(mesh, "visible");
-gui.add(material, "wireframe");
-gui.addColor(material, "color");
-gui.add(parameters, "spin");
+// gui.add(mesh.position, "x").min(-3).max(3).step(0.01).name("X");
+// gui.add(mesh.position, "y").min(-3).max(3).step(0.01).name("Y");
+// gui.add(mesh.position, "z").min(-3).max(3).step(0.01).name("Z");
+// gui.add(mesh, "visible");
+// gui.add(material, "wireframe");
+// gui.addColor(material, "color");
+// gui.add(parameters, "spin");
 
 // Size
 const sizes = {
@@ -282,7 +282,7 @@ const camera = new THREE.PerspectiveCamera(
 camera.position.z = 5;
 
 scene.add(camera);
-camera.lookAt(mesh.position);
+// camera.lookAt(mesh.position);
 
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
@@ -319,7 +319,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 //   }
 // });
 
-const clock = new THREE.Clock();
+// const clock = new THREE.Clock();
 
 // Animation
 const tick = () => {
@@ -335,13 +335,13 @@ const tick = () => {
   // camera.lookAt(mesh.position);
 
   // Update Object
-  const elapsedTime = clock.getElapsedTime();
-  sphere.rotation.y = 0.2 * elapsedTime;
-  plane.rotation.y = 0.2 * elapsedTime;
-  torus.rotation.y = 0.2 * elapsedTime;
-  sphere.rotation.x = 0.2 * elapsedTime;
-  plane.rotation.x = 0.2 * elapsedTime;
-  torus.rotation.x = 0.2 * elapsedTime;
+  // const elapsedTime = clock.getElapsedTime();
+  // sphere.rotation.y = 0.2 * elapsedTime;
+  // plane.rotation.y = 0.2 * elapsedTime;
+  // torus.rotation.y = 0.2 * elapsedTime;
+  // sphere.rotation.x = 0.2 * elapsedTime;
+  // plane.rotation.x = 0.2 * elapsedTime;
+  // torus.rotation.x = 0.2 * elapsedTime;
 
   // Update controls
   controls.update();
