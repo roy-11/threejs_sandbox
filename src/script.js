@@ -2,6 +2,8 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 // import gsap from "gsap";
 // import * as dat from "lil-gui";
+import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
+import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 
 // import imagaeSource from "../static/textures/door/normal.jpg";
 // console.log(imagaeSource);
@@ -17,21 +19,21 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 //
 // image.src = "/textures/door/color.jpg";
 
-// const loadingManager = new THREE.LoadingManager();
-// loadingManager.onStart = () => {
-//   console.log("loading started");
-// };
-// loadingManager.onLoad = () => {
-//   console.log("loading finished");
-// };
-// loadingManager.onProgress = () => {
-//   console.log("loading progressing");
-// };
-// loadingManager.onError = () => {
-//   console.log("loading error");
-// };
-//
-// const textureLoader = new THREE.TextureLoader(loadingManager);
+const loadingManager = new THREE.LoadingManager();
+loadingManager.onStart = () => {
+  console.log("loading started");
+};
+loadingManager.onLoad = () => {
+  console.log("loading finished");
+};
+loadingManager.onProgress = () => {
+  console.log("loading progressing");
+};
+loadingManager.onError = () => {
+  console.log("loading error");
+};
+
+const textureLoader = new THREE.TextureLoader(loadingManager);
 // const color = textureLoader.load("/textures/door/color.jpg");
 // const alpha = textureLoader.load("/textures/door/alpha.jpg");
 // const height = textureLoader.load("/textures/door/height.jpg");
@@ -45,8 +47,10 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 // const checker2 = textureLoader.load("/textures/checkerboard-8x8.png");
 // const minecraft = textureLoader.load("/textures/minecraft.png");
 //
-// const matcap = textureLoader.load("/textures/matcaps/1.png");
-// const matcap8 = textureLoader.load("/textures/matcaps/8.png");
+const matcap = textureLoader.load("/textures/matcaps/1.png");
+const matcap2 = textureLoader.load("/textures/matcaps/2.png");
+const matcap3 = textureLoader.load("/textures/matcaps/3.png");
+const matcap8 = textureLoader.load("/textures/matcaps/8.png");
 // const gradient = textureLoader.load("/textures/gradients/3.jpg");
 // const gradient5 = textureLoader.load("/textures/gradients/5.jpg");
 // gradient.minFilter = THREE.NearestFilter;
@@ -86,6 +90,87 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 // Scene
 const scene = new THREE.Scene();
+
+// Helper
+const axisHelper = new THREE.AxesHelper();
+// scene.add(axisHelper);
+
+// Font
+const fontLoader = new FontLoader();
+fontLoader.load("/fonts/helvetiker_regular.typeface.json", (font) => {
+  console.log("font loaded");
+  const textGeometry = new TextGeometry("Hello World", {
+    font: font,
+    size: 0.5,
+    height: 0.2,
+    curveSegments: 5,
+    bevelEnabled: true,
+    bevelThickness: 0.03,
+    bevelSize: 0.02,
+    bevelOffset: 0,
+    bevelSegments: 4,
+  });
+  //   textGeometry.computeBoundingBox()
+  //   textGeometry.translate(
+  //     - textGeometry.boundingBox.max.x * 0.5,
+  //     - textGeometry.boundingBox.max.y * 0.5,
+  //     - textGeometry.boundingBox.max.z * 0.5
+  // )
+  textGeometry.center();
+
+  const material = new THREE.MeshMatcapMaterial({ matcap: matcap8 });
+  // material.wireframe = true;
+  const text = new THREE.Mesh(textGeometry, material);
+  scene.add(text);
+
+  const donutMaterial = new THREE.MeshMatcapMaterial({ matcap: matcap2 });
+  const donutGeometry = new THREE.TorusGeometry(0.3, 0.2, 20, 45);
+  for (let i = 0; i < 100; i++) {
+    const donut = new THREE.Mesh(donutGeometry, donutMaterial);
+
+    donut.position.x = (Math.random() - 0.5) * 100;
+    donut.position.y = (Math.random() - 0.5) * 100;
+    donut.position.z = (Math.random() - 0.5) * 100;
+    donut.rotation.x = Math.random() * Math.PI;
+    donut.rotation.y = Math.random() * Math.PI;
+    const scale = Math.random();
+    donut.scale.set(scale, scale, scale);
+
+    scene.add(donut);
+  }
+
+  const sphereMaterial = new THREE.MeshMatcapMaterial({ matcap: matcap3 });
+  const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32);
+  for (let i = 0; i < 100; i++) {
+    const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+
+    sphere.position.x = (Math.random() - 0.5) * 100;
+    sphere.position.y = (Math.random() - 0.5) * 100;
+    sphere.position.z = (Math.random() - 0.5) * 100;
+    sphere.rotation.x = Math.random() * Math.PI;
+    sphere.rotation.y = Math.random() * Math.PI;
+    const scale = Math.random();
+    sphere.scale.set(scale, scale, scale);
+
+    scene.add(sphere);
+  }
+
+  const octahedronMaterial = new THREE.MeshMatcapMaterial({ matcap: matcap8 });
+  const octahedronGeometry = new THREE.OctahedronGeometry();
+  for (let i = 0; i < 100; i++) {
+    const octahedron = new THREE.Mesh(octahedronGeometry, octahedronMaterial);
+
+    octahedron.position.x = (Math.random() - 0.5) * 100;
+    octahedron.position.y = (Math.random() - 0.5) * 100;
+    octahedron.position.z = (Math.random() - 0.5) * 100;
+    octahedron.rotation.x = Math.random() * Math.PI;
+    octahedron.rotation.y = Math.random() * Math.PI;
+    const scale = Math.random();
+    octahedron.scale.set(scale, scale, scale);
+
+    scene.add(octahedron);
+  }
+});
 
 // Object
 // const geometry = new THREE.BoxGeometry(1, 1, 1, 2, 2, 2);
@@ -258,12 +343,7 @@ window.addEventListener("dblclick", () => {
 });
 
 // PerspectiveCamera
-const camera = new THREE.PerspectiveCamera(
-  75,
-  sizes.width / sizes.height,
-  1,
-  100
-);
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
 
 // OrthographicCamera
 // const aspectRatio = sizes.width / sizes.height;
@@ -279,7 +359,7 @@ const camera = new THREE.PerspectiveCamera(
 // position
 // camera.position.x = 2;
 // camera.position.y = 2;
-camera.position.z = 5;
+camera.position.z = 10;
 
 scene.add(camera);
 // camera.lookAt(mesh.position);
