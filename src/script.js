@@ -1,9 +1,10 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 // import gsap from "gsap";
-// import * as dat from "lil-gui";
+import * as dat from "lil-gui";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
+import { RectAreaLightHelper } from "three/examples/jsm/helpers/RectAreaLightHelper.js";
 
 // import imagaeSource from "../static/textures/door/normal.jpg";
 // console.log(imagaeSource);
@@ -86,7 +87,7 @@ const matcap8 = textureLoader.load("/textures/matcaps/8.png");
 // selected.magFilter = THREE.NearestFilter;
 
 // Debug
-// const gui = new dat.GUI();
+const gui = new dat.GUI();
 
 // Scene
 const scene = new THREE.Scene();
@@ -96,81 +97,81 @@ const axisHelper = new THREE.AxesHelper();
 // scene.add(axisHelper);
 
 // Font
-const fontLoader = new FontLoader();
-fontLoader.load("/fonts/helvetiker_regular.typeface.json", (font) => {
-  console.log("font loaded");
-  const textGeometry = new TextGeometry("Hello World", {
-    font: font,
-    size: 0.5,
-    height: 0.2,
-    curveSegments: 5,
-    bevelEnabled: true,
-    bevelThickness: 0.03,
-    bevelSize: 0.02,
-    bevelOffset: 0,
-    bevelSegments: 4,
-  });
-  //   textGeometry.computeBoundingBox()
-  //   textGeometry.translate(
-  //     - textGeometry.boundingBox.max.x * 0.5,
-  //     - textGeometry.boundingBox.max.y * 0.5,
-  //     - textGeometry.boundingBox.max.z * 0.5
-  // )
-  textGeometry.center();
-
-  const material = new THREE.MeshMatcapMaterial({ matcap: matcap8 });
-  // material.wireframe = true;
-  const text = new THREE.Mesh(textGeometry, material);
-  scene.add(text);
-
-  const donutMaterial = new THREE.MeshMatcapMaterial({ matcap: matcap2 });
-  const donutGeometry = new THREE.TorusGeometry(0.3, 0.2, 20, 45);
-  for (let i = 0; i < 100; i++) {
-    const donut = new THREE.Mesh(donutGeometry, donutMaterial);
-
-    donut.position.x = (Math.random() - 0.5) * 100;
-    donut.position.y = (Math.random() - 0.5) * 100;
-    donut.position.z = (Math.random() - 0.5) * 100;
-    donut.rotation.x = Math.random() * Math.PI;
-    donut.rotation.y = Math.random() * Math.PI;
-    const scale = Math.random();
-    donut.scale.set(scale, scale, scale);
-
-    scene.add(donut);
-  }
-
-  const sphereMaterial = new THREE.MeshMatcapMaterial({ matcap: matcap3 });
-  const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32);
-  for (let i = 0; i < 100; i++) {
-    const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-
-    sphere.position.x = (Math.random() - 0.5) * 100;
-    sphere.position.y = (Math.random() - 0.5) * 100;
-    sphere.position.z = (Math.random() - 0.5) * 100;
-    sphere.rotation.x = Math.random() * Math.PI;
-    sphere.rotation.y = Math.random() * Math.PI;
-    const scale = Math.random();
-    sphere.scale.set(scale, scale, scale);
-
-    scene.add(sphere);
-  }
-
-  const octahedronMaterial = new THREE.MeshMatcapMaterial({ matcap: matcap8 });
-  const octahedronGeometry = new THREE.OctahedronGeometry();
-  for (let i = 0; i < 100; i++) {
-    const octahedron = new THREE.Mesh(octahedronGeometry, octahedronMaterial);
-
-    octahedron.position.x = (Math.random() - 0.5) * 100;
-    octahedron.position.y = (Math.random() - 0.5) * 100;
-    octahedron.position.z = (Math.random() - 0.5) * 100;
-    octahedron.rotation.x = Math.random() * Math.PI;
-    octahedron.rotation.y = Math.random() * Math.PI;
-    const scale = Math.random();
-    octahedron.scale.set(scale, scale, scale);
-
-    scene.add(octahedron);
-  }
-});
+// const fontLoader = new FontLoader();
+// fontLoader.load("/fonts/helvetiker_regular.typeface.json", (font) => {
+//   console.log("font loaded");
+//   const textGeometry = new TextGeometry("Hello World", {
+//     font: font,
+//     size: 0.5,
+//     height: 0.2,
+//     curveSegments: 5,
+//     bevelEnabled: true,
+//     bevelThickness: 0.03,
+//     bevelSize: 0.02,
+//     bevelOffset: 0,
+//     bevelSegments: 4,
+//   });
+//   //   textGeometry.computeBoundingBox()
+//   //   textGeometry.translate(
+//   //     - textGeometry.boundingBox.max.x * 0.5,
+//   //     - textGeometry.boundingBox.max.y * 0.5,
+//   //     - textGeometry.boundingBox.max.z * 0.5
+//   // )
+//   textGeometry.center();
+//
+//   const material = new THREE.MeshMatcapMaterial({ matcap: matcap8 });
+//   // material.wireframe = true;
+//   const text = new THREE.Mesh(textGeometry, material);
+//   scene.add(text);
+//
+//   const donutMaterial = new THREE.MeshMatcapMaterial({ matcap: matcap2 });
+//   const donutGeometry = new THREE.TorusGeometry(0.3, 0.2, 20, 45);
+//   for (let i = 0; i < 100; i++) {
+//     const donut = new THREE.Mesh(donutGeometry, donutMaterial);
+//
+//     donut.position.x = (Math.random() - 0.5) * 100;
+//     donut.position.y = (Math.random() - 0.5) * 100;
+//     donut.position.z = (Math.random() - 0.5) * 100;
+//     donut.rotation.x = Math.random() * Math.PI;
+//     donut.rotation.y = Math.random() * Math.PI;
+//     const scale = Math.random();
+//     donut.scale.set(scale, scale, scale);
+//
+//     scene.add(donut);
+//   }
+//
+//   const sphereMaterial = new THREE.MeshMatcapMaterial({ matcap: matcap3 });
+//   const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32);
+//   for (let i = 0; i < 100; i++) {
+//     const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+//
+//     sphere.position.x = (Math.random() - 0.5) * 100;
+//     sphere.position.y = (Math.random() - 0.5) * 100;
+//     sphere.position.z = (Math.random() - 0.5) * 100;
+//     sphere.rotation.x = Math.random() * Math.PI;
+//     sphere.rotation.y = Math.random() * Math.PI;
+//     const scale = Math.random();
+//     sphere.scale.set(scale, scale, scale);
+//
+//     scene.add(sphere);
+//   }
+//
+//   const octahedronMaterial = new THREE.MeshMatcapMaterial({ matcap: matcap8 });
+//   const octahedronGeometry = new THREE.OctahedronGeometry();
+//   for (let i = 0; i < 100; i++) {
+//     const octahedron = new THREE.Mesh(octahedronGeometry, octahedronMaterial);
+//
+//     octahedron.position.x = (Math.random() - 0.5) * 100;
+//     octahedron.position.y = (Math.random() - 0.5) * 100;
+//     octahedron.position.z = (Math.random() - 0.5) * 100;
+//     octahedron.rotation.x = Math.random() * Math.PI;
+//     octahedron.rotation.y = Math.random() * Math.PI;
+//     const scale = Math.random();
+//     octahedron.scale.set(scale, scale, scale);
+//
+//     scene.add(octahedron);
+//   }
+// });
 
 // Object
 // const geometry = new THREE.BoxGeometry(1, 1, 1, 2, 2, 2);
@@ -242,9 +243,100 @@ fontLoader.load("/fonts/helvetiker_regular.typeface.json", (font) => {
 // torus.position.x = 1.5;
 // scene.add(sphere, plane, torus);
 
-// Lights
+// Object 3
+const material = new THREE.MeshStandardMaterial();
+material.roughness = 0.4;
+
+const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.5, 32, 32), material);
+sphere.position.x = -1.5;
+
+const cube = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.75, 0.75), material);
+
+const torus = new THREE.Mesh(
+  new THREE.TorusGeometry(0.3, 0.2, 32, 64),
+  material
+);
+torus.position.x = 1.5;
+
+const plane = new THREE.Mesh(new THREE.PlaneGeometry(5, 5), material);
+plane.rotation.x = -Math.PI * 0.5;
+plane.position.y = -0.65;
+
+scene.add(sphere, cube, torus, plane);
+
+// Lights 1
 // const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
 // scene.add(ambientLight);
+
+// const pointLight = new THREE.PointLight(0xffffff, 0.5);
+// pointLight.position.x = 2;
+// pointLight.position.y = 3;
+// pointLight.position.z = 4;
+// scene.add(pointLight);
+
+// Lights 2
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+gui
+  .add(ambientLight, "intensity")
+  .min(0)
+  .max(1)
+  .step(0.0001)
+  .name("Ambient Light intensity");
+scene.add(ambientLight);
+
+const directionalLight = new THREE.DirectionalLight(0x00fffc, 0.3);
+directionalLight.position.set(1, 0.25, 0);
+gui
+  .add(directionalLight.position, "x")
+  .min(0)
+  .max(1)
+  .step(0.0001)
+  .name("Directional Light x");
+scene.add(directionalLight);
+
+const hemisphereLight = new THREE.HemisphereLight(0xff0000, 0x0000ff, 0.3);
+scene.add(hemisphereLight);
+
+const pointLight = new THREE.PointLight(0xff9000, 0.5, 10, 2);
+pointLight.position.set(1, -0.5, 1);
+scene.add(pointLight);
+
+const rectAreaLight = new THREE.RectAreaLight(0x4e00ff, 2, 1, 1);
+rectAreaLight.position.set(1.5, -0, -1.5);
+rectAreaLight.lookAt(new THREE.Vector3());
+scene.add(rectAreaLight);
+
+const spotLight = new THREE.SpotLight(
+  0x78ff00,
+  0.5,
+  10,
+  Math.PI * 0.1,
+  0.25,
+  1
+);
+spotLight.position.set(0, 2, 3);
+scene.add(spotLight);
+
+const hemisphereLightHelper = new THREE.HemisphereLightHelper(
+  hemisphereLight,
+  0.2
+);
+scene.add(hemisphereLightHelper);
+
+const directionalLightHelper = new THREE.DirectionalLightHelper(
+  directionalLight,
+  0.2
+);
+scene.add(directionalLightHelper);
+
+const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.2);
+scene.add(pointLightHelper);
+
+const spotLightHelper = new THREE.SpotLightHelper(spotLight);
+scene.add(spotLightHelper);
+
+const rectAreaLightHelper = new RectAreaLightHelper(rectAreaLight);
+scene.add(rectAreaLightHelper);
 
 // const pointLight = new THREE.PointLight(0xffffff, 0.5);
 // pointLight.position.x = 2;
