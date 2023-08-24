@@ -51,7 +51,8 @@ const particlesMaterial = new THREE.PointsMaterial({
   size: 0.02,
   sizeAttenuation: true,
 });
-particlesMaterial.color = new THREE.Color("#ff88cc");
+
+// particlesMaterial.color = new THREE.Color("#ff88cc");
 // particlesMaterial.map = particleTexture;
 particlesMaterial.transparent = true;
 particlesMaterial.alphaMap = particleTexture;
@@ -130,6 +131,18 @@ const clock = new THREE.Clock();
 
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
+
+  particles.rotation.y = elapsedTime * 0.2;
+  for (let i = 0; i < count; i++) {
+    const i3 = i * 3;
+    particlesGeometry.attributes.position.array[i3 + 1] = Math.sin(elapsedTime);
+
+    const x = particlesGeometry.attributes.position.array[i3];
+    particlesGeometry.attributes.position.array[i3 + 1] = Math.sin(
+      elapsedTime + x
+    );
+  }
+  particlesGeometry.attributes.position.needsUpdate = true;
 
   // Update controls
   controls.update();
