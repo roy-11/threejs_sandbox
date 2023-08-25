@@ -8,7 +8,7 @@ THREE.ColorManagement.enabled = false;
  * Base
  */
 // Debug
-const gui = new dat.GUI();
+// const gui = new dat.GUI();
 
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
@@ -104,8 +104,8 @@ window.addEventListener("resize", () => {
 const camera = new THREE.PerspectiveCamera(
   75,
   sizes.width / sizes.height,
-  0.1,
-  100
+  0.0001,
+  1000000
 );
 camera.position.z = 3;
 scene.add(camera);
@@ -130,19 +130,20 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 const clock = new THREE.Clock();
 
 const tick = () => {
-  const elapsedTime = clock.getElapsedTime();
+  const elapsedTime = clock.getElapsedTime() + 13;
+  camera.position.z = Math.sin(elapsedTime * 0.1) * 8;
+  camera.position.x = Math.cos(elapsedTime * 0.2) * 0.5;
+  camera.position.y = Math.cos(elapsedTime * 0.2) * 0.5;
 
-  particles.rotation.y = elapsedTime * 0.2;
-  for (let i = 0; i < count; i++) {
-    const i3 = i * 3;
-    particlesGeometry.attributes.position.array[i3 + 1] = Math.sin(elapsedTime);
-
-    const x = particlesGeometry.attributes.position.array[i3];
-    particlesGeometry.attributes.position.array[i3 + 1] = Math.sin(
-      elapsedTime + x
-    );
-  }
-  particlesGeometry.attributes.position.needsUpdate = true;
+  // particles.rotation.y = elapsedTime * 0.2;
+  // for (let i = 0; i < count; i++) {
+  //   const i3 = i * 3;
+  //
+  //   const x = particlesGeometry.attributes.position.array[i3];
+  //   particlesGeometry.attributes.position.array[i3 + 1] =
+  //     Math.sin(elapsedTime + x) * 2;
+  // }
+  // particlesGeometry.attributes.position.needsUpdate = true;
 
   // Update controls
   controls.update();
