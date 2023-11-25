@@ -10,17 +10,27 @@ THREE.ColorManagement.enabled = false;
 // Canvas and Scene and Debug
 const canvas = document.querySelector("canvas.webgl");
 const scene = new THREE.Scene();
-const gui = new GUI();
+const gui = new GUI({ width: 360 });
 
 /**
  * Galaxy
  */
 const parameters = {};
-parameters.count = 1000;
-parameters.size = 0.02;
+parameters.count = 100_000;
+parameters.size = 0.01;
+
+let geometry = null;
+let material = null;
+let points = null;
 
 const generateGalaxy = () => {
-  const geometry = new THREE.BufferGeometry();
+  if (points !== null) {
+    geometry.dispose();
+    material.dispose();
+    scene.remove(points);
+  }
+
+  geometry = new THREE.BufferGeometry();
   const positions = new Float32Array(parameters.count * 3);
 
   for (let i = 0; i < parameters.count; i++) {
@@ -34,18 +44,31 @@ const generateGalaxy = () => {
   geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
 
   // Material
-  const material = new THREE.PointsMaterial({
+  material = new THREE.PointsMaterial({
     size: parameters.size,
     sizeAttenuation: true,
     depthWrite: false,
     blending: THREE.AdditiveBlending,
   });
 
-  const points = new THREE.Points(geometry, material);
+  points = new THREE.Points(geometry, material);
   scene.add(points);
 };
 
 generateGalaxy();
+gui
+  .add(parameters, "count")
+  .min(100)
+  .max(1_000_000)
+  .step(100)
+  .onFinishChange(generateGalaxy);
+
+gui
+  .add(parameters, "size")
+  .min(0.001)
+  .max(0.1)
+  .step(0.001)
+  .onFinishChange(generateGalaxy);
 
 const sizes = {
   width: window.innerWidth,
