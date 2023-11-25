@@ -1,83 +1,17 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import * as dat from "lil-gui";
+import GUI from "lil-gui";
 
 THREE.ColorManagement.enabled = false;
 
 /**
  * Base
  */
-// Debug
-// const gui = new dat.GUI();
-
-// Canvas
+// Canvas and Scene and Debug
 const canvas = document.querySelector("canvas.webgl");
-
-// Scene
 const scene = new THREE.Scene();
+const gui = new GUI();
 
-/**
- * Textures
- */
-const textureLoader = new THREE.TextureLoader();
-const particleTexture = textureLoader.load("/textures/particles/2.png");
-
-/**
- * Particles
- */
-// const particlesGeometry = new THREE.SphereGeometry(1, 32, 32);
-const particlesGeometry = new THREE.BufferGeometry();
-const count = 500000;
-
-// Multiply by 3 because each position is composed of 3 values (x, y, z)
-const positions = new Float32Array(count * 3);
-const colors = new Float32Array(count * 3);
-
-// Multiply by 3 for same reason
-for (let i = 0; i < count * 3; i++) {
-  // Math.random() - 0.5 to have a random value between -0.5 and +0.5
-  positions[i] = (Math.random() - 0.5) * 10;
-  colors[i] = Math.random();
-}
-
-// Create the Three.js BufferAttribute and specify that each information is composed of 3 values
-particlesGeometry.setAttribute(
-  "position",
-  new THREE.BufferAttribute(positions, 3)
-);
-particlesGeometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
-
-const particlesMaterial = new THREE.PointsMaterial({
-  size: 0.02,
-  sizeAttenuation: true,
-});
-
-// particlesMaterial.color = new THREE.Color("#ff88cc");
-// particlesMaterial.map = particleTexture;
-particlesMaterial.transparent = true;
-particlesMaterial.alphaMap = particleTexture;
-// particlesMaterial.alphaTest = 0.001;
-// particlesMaterial.depthTest = false;
-particlesMaterial.depthWrite = false;
-particlesMaterial.blending = THREE.AdditiveBlending;
-particlesMaterial.vertexColors = true;
-
-// Points
-const particles = new THREE.Points(particlesGeometry, particlesMaterial);
-scene.add(particles);
-
-/**
- * Test cube
- */
-// const cube = new THREE.Mesh(
-//   new THREE.BoxGeometry(1, 1, 1),
-//   new THREE.MeshBasicMaterial()
-// );
-// scene.add(cube);
-
-/**
- * Sizes
- */
 const sizes = {
   width: window.innerWidth,
   height: window.innerHeight,
@@ -104,9 +38,11 @@ window.addEventListener("resize", () => {
 const camera = new THREE.PerspectiveCamera(
   75,
   sizes.width / sizes.height,
-  0.0001,
-  1000000
+  0.1,
+  100
 );
+camera.position.x = 3;
+camera.position.y = 3;
 camera.position.z = 3;
 scene.add(camera);
 
@@ -127,23 +63,9 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 /**
  * Animate
  */
-const clock = new THREE.Clock();
-
+// const clock = new THREE.Clock();
 const tick = () => {
-  const elapsedTime = clock.getElapsedTime() + 13;
-  camera.position.z = Math.sin(elapsedTime * 0.1) * 8;
-  camera.position.x = Math.cos(elapsedTime * 0.2) * 0.5;
-  camera.position.y = Math.cos(elapsedTime * 0.2) * 0.5;
-
-  // particles.rotation.y = elapsedTime * 0.2;
-  // for (let i = 0; i < count; i++) {
-  //   const i3 = i * 3;
-  //
-  //   const x = particlesGeometry.attributes.position.array[i3];
-  //   particlesGeometry.attributes.position.array[i3 + 1] =
-  //     Math.sin(elapsedTime + x) * 2;
-  // }
-  // particlesGeometry.attributes.position.needsUpdate = true;
+  // const elapsedTime = clock.getElapsedTime();
 
   // Update controls
   controls.update();
