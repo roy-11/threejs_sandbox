@@ -18,14 +18,23 @@ const parameters = {
 
 gui.addColor(parameters, "materialColor");
 
-/**
- * Test cube
- */
-const cube = new THREE.Mesh(
-  new THREE.BoxGeometry(1, 1, 1),
+// Meshes
+const mesh1 = new THREE.Mesh(
+  new THREE.TorusGeometry(1, 0.4, 16, 60),
   new THREE.MeshBasicMaterial({ color: "#ff0000" })
 );
-scene.add(cube);
+
+const mesh2 = new THREE.Mesh(
+  new THREE.ConeGeometry(1, 2, 32),
+  new THREE.MeshBasicMaterial({ color: "#ff0000" })
+);
+
+const mesh3 = new THREE.Mesh(
+  new THREE.TorusKnotGeometry(0.8, 0.35, 100, 16),
+  new THREE.MeshBasicMaterial({ color: "#ff0000" })
+);
+
+scene.add(mesh1, mesh2, mesh3);
 
 const sizes = {
   width: window.innerWidth,
