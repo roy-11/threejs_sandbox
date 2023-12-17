@@ -32,12 +32,17 @@ const material = new THREE.MeshToonMaterial({
 });
 
 // Meshes
+const objectDistance = 4;
 const mesh1 = new THREE.Mesh(new THREE.TorusGeometry(1, 0.4, 16, 60), material);
 const mesh2 = new THREE.Mesh(new THREE.ConeGeometry(1, 2, 32), material);
 const mesh3 = new THREE.Mesh(
   new THREE.TorusKnotGeometry(0.8, 0.35, 100, 16),
   material
 );
+
+mesh1.position.y = -objectDistance * 0;
+mesh2.position.y = -objectDistance * 1;
+mesh3.position.y = -objectDistance * 2;
 
 scene.add(mesh1, mesh2, mesh3);
 
@@ -72,7 +77,7 @@ window.addEventListener("resize", () => {
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(
-  75,
+  35,
   sizes.width / sizes.height,
   0.1,
   100
