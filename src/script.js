@@ -80,6 +80,9 @@ window.addEventListener("resize", () => {
 /**
  * Camera
  */
+const cameraGroup = new THREE.Group();
+scene.add(cameraGroup);
+
 // Base camera
 const camera = new THREE.PerspectiveCamera(
   35,
@@ -88,7 +91,7 @@ const camera = new THREE.PerspectiveCamera(
   100
 );
 camera.position.z = 6;
-scene.add(camera);
+cameraGroup.add(camera);
 
 // Controls
 // import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
@@ -117,6 +120,19 @@ window.addEventListener("scroll", () => {
 });
 
 /**
+ * Cursor
+ */
+const cursor = {
+  x: 0,
+  y: 0,
+};
+
+window.addEventListener("mousemove", (event) => {
+  cursor.x = event.clientX / sizes.width - 0.5;
+  cursor.y = event.clientY / sizes.height - 0.5;
+});
+
+/**
  * Animate
  */
 const clock = new THREE.Clock();
@@ -128,6 +144,11 @@ const tick = () => {
   // controls.update();
 
   camera.position.y = (-scrollY / sizes.height) * objectDistance;
+
+  const parallaxX = cursor.x;
+  const parallaxY = -cursor.y;
+  cameraGroup.position.x = parallaxX;
+  cameraGroup.position.y = parallaxY;
 
   // Animate meshes
   for (const mesh of sectionMeshes) {
