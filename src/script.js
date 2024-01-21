@@ -19,14 +19,19 @@ const gui = new GUI({ width: 360 });
 const textureLoader = new THREE.TextureLoader();
 const cubeTextureLoader = new THREE.CubeTextureLoader();
 
-const environmentMapTexture = cubeTextureLoader.load([
-  "/textures/environmentMaps/0/px.png",
-  "/textures/environmentMaps/0/nx.png",
-  "/textures/environmentMaps/0/py.png",
-  "/textures/environmentMaps/0/ny.png",
-  "/textures/environmentMaps/0/pz.png",
-  "/textures/environmentMaps/0/nz.png",
-]);
+const environmentMapTexture = cubeTextureLoader.load(
+  [
+    "/textures/environmentMaps/0/px.png",
+    "/textures/environmentMaps/0/nx.png",
+    "/textures/environmentMaps/0/py.png",
+    "/textures/environmentMaps/0/ny.png",
+    "/textures/environmentMaps/0/pz.png",
+    "/textures/environmentMaps/0/nz.png",
+  ],
+  console.log,
+  console.log,
+  console.log,
+);
 
 /**
  * Test sphere
