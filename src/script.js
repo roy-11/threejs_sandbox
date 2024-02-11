@@ -19,9 +19,20 @@ const scene = new THREE.Scene();
  * Models
  */
 const gltfLoader = new GLTFLoader();
-gltfLoader.load("/models/Duck/glTF/Duck.gltf", (gltf) => {
-  console.log(gltf);
-  scene.add(gltf.scene.children[0]);
+gltfLoader.load("/models/FlightHelmet/glTF/FlightHelmet.gltf", (gltf) => {
+  // scene.add(gltf.scene.children[0]);
+  // for (const child of gltf.scene.children) {
+  //   scene.add(child);
+  // }
+  // while (gltf.scene.children.length) {
+  //   scene.add(gltf.scene.children[0]);
+  // }
+  // const children = [...gltf.scene.children];
+  // for (const child of children) {
+  //   scene.add(child);
+  // }
+
+  scene.add(gltf.scene);
 });
 
 /**
