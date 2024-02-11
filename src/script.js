@@ -24,22 +24,16 @@ const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath("/draco/");
 gltfLoader.setDRACOLoader(dracoLoader);
 
-gltfLoader.load("/models/Duck/glTF-Draco/Duck.gltf", (gltf) => {
-  // scene.add(gltf.scene.children[0]);
-  // for (const child of gltf.scene.children) {
-  //   scene.add(child);
-  // }
-  // while (gltf.scene.children.length) {
-  //   scene.add(gltf.scene.children[0]);
-  // }
-  // const children = [...gltf.scene.children];
-  // for (const child of children) {
-  //   scene.add(child);
-  // }
+let mixer = null;
 
+gltfLoader.load("/models/Fox/glTF/Fox.gltf", (gltf) => {
+  mixer = new THREE.AnimationMixer(gltf.scene);
+  const action = mixer.clipAction(gltf.animations[2]);
+  action.play();
+
+  gltf.scene.scale.set(0.025, 0.025, 0.025);
   scene.add(gltf.scene);
 });
-
 /**
  * Floor
  */
@@ -61,7 +55,7 @@ scene.add(floor);
 const ambientLight = new THREE.AmbientLight(0xffffff, 2.4);
 scene.add(ambientLight);
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1.8);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.7);
 directionalLight.castShadow = true;
 directionalLight.shadow.mapSize.set(1024, 1024);
 directionalLight.shadow.camera.far = 15;
@@ -137,6 +131,9 @@ const tick = () => {
 
   // Update controls
   controls.update();
+
+  // Update mixer
+  if (mixer) mixer.update(deltaTime);
 
   // Render
   renderer.render(scene, camera);
