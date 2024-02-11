@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import GUI from "lil-gui";
 
 THREE.ColorManagement.enabled = false;
@@ -13,6 +14,15 @@ const scene = new THREE.Scene();
 
 // Debug
 // const gui = new GUI({ width: 360 });
+
+/**
+ * Models
+ */
+const gltfLoader = new GLTFLoader();
+gltfLoader.load("/models/Duck/glTF/Duck.gltf", (gltf) => {
+  console.log(gltf);
+  scene.add(gltf.scene.children[0]);
+});
 
 /**
  * Floor
